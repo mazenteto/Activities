@@ -19,7 +19,11 @@ builder.Services.AddAutoMapper(cfg => { },typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 
-app.UseCors(opt => opt.AllowAnyMethod().AllowAnyMethod().WithOrigins("http://localhost:3000","https://localhost:3000"));
+app.UseCors(opt =>
+        opt.AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins("http://localhost:3000", "https://localhost:3000")
+        );
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

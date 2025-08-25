@@ -2,24 +2,20 @@ import {
   Box,
   Container,
   CssBaseline,
+  Typography,
 } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../festures/activities/dashboard/ActivityDashboard";
+import { useActivities } from "../../lib/types/hooks/useActivities";
 
 function App() {
-  const [activities, SetActivites] = useState<Activity[]>([]);
+
   const[selectedActivity,setselectedActivity]=useState<Activity|undefined>(undefined);
   const [editMode,setEditMode]=useState(false);
-  useEffect(() => {
-    axios
-      .get<Activity[]>("https://localhost:5001/api/activities")
-      .then((response) => SetActivites(response.data));
-    return () => {};
-  }, [])
+  const {activities,isPending}=useActivities();
   const handleSelectActivity=(id:string)=>{
-    setselectedActivity(activities.find(x=>x.id===id));
+    setselectedActivity(activities!.find(x=>x.id===id));
   }
   const handleCancelSelectedActivity=()=>{
     setselectedActivity(undefined);
@@ -32,25 +28,15 @@ function App() {
   const handleFormClose=()=>{
     setEditMode(false);
   }
-  const handleSubmitForm=(activity:Activity)=>{
-    if(activity.id){
-      SetActivites(activities.map(x=>x.id===activity.id?activity:x))
-  }else{
-    const newActivity={...activity,id:activities.length.toString()}
-    SetActivites([...activities,newActivity])
-  }
-  setEditMode(false);
-  setselectedActivity(undefined);
-}
-const handleDelete=(id:string)=>{
-  SetActivites(activities.filter(x=>x.id!==id))
-}
   return (
-    <Box sx={{bgcolor:'#eeeeee'}}>
+    <Box sx={{bgcolor:'#eeeeee',minHeight:'100vh'}}>
       <CssBaseline />
       <NavBar openForm={handleOpenFourm}/>
       <Container maxWidth="xl" sx={{ mt: 3 }}>
-        <ActivityDashboard 
+        {!activities||isPending?(
+          <Typography>Loading....</Typography>
+        ):(
+          <ActivityDashboard 
           activities={activities}
           selectActivity={handleSelectActivity}
           cancelSelectActivity={handleCancelSelectedActivity}
@@ -58,9 +44,10 @@ const handleDelete=(id:string)=>{
           editMode={editMode}
           openForm={handleOpenFourm}
           closeForm={handleFormClose}
-          submitForm={handleSubmitForm}
-          deleteActivity={handleDelete}
         />
+
+        )}
+
       </Container>
     </Box>
   );

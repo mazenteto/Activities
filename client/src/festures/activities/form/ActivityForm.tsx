@@ -1,7 +1,8 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
-import { useActivities } from "../../../lib/types/hooks/useActivities";
+
 import { useNavigate, useParams } from "react-router";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 export default function ActivityForm() {
   const {id}=useParams();

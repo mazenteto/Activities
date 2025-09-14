@@ -1,10 +1,11 @@
 import { Grid, Typography } from "@mui/material"
 import { useParams } from "react-router";
-import { useActivities } from "../../../lib/types/hooks/useActivities";
+
 import ActivityDetailsHeader from "./ActivityDetailsHeader";
 import ActivityDetailsInfo from "./ActivityDetailsInfo";
 import ActivityDetailsChat from "./ActivityDetailsChat";
 import ActivityDetailsSidebar from "./ActivityDetailsSidebar";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 
 export default function ActivityDetails() {

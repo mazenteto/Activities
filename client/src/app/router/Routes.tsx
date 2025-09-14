@@ -4,6 +4,7 @@ import HomePage from "../../festures/home/HomePage";
 import ActivityDashboard from "../../festures/activities/dashboard/ActivityDashboard";
 import ActivityForm from "../../festures/activities/form/ActivityForm";
 import ActivityDetailsPage from "../../festures/activities/details/ActivityDetailsPage";
+import Counter from "../../festures/counter/Counter";
 
 export const router=createBrowserRouter([
     {
@@ -15,6 +16,7 @@ export const router=createBrowserRouter([
             {path:'activities/:id',element:<ActivityDetailsPage />},
             {path:'createActivity',element:<ActivityForm key='Create' />},
             {path:'manage/:id',element:<ActivityForm />},
+            {path:'counter',element:<Counter />},
         ]
 
     }

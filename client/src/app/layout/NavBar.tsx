@@ -1,9 +1,8 @@
 import { Group } from "@mui/icons-material";
-import { AppBar, Box, Toolbar, Container, MenuItem, Typography, Button } from "@mui/material";
-type Props={
-  openForm:()=>void;
-}
-export default function NavBar({openForm}:Props) {
+import { AppBar, Box, Toolbar, Container, MenuItem, Typography } from "@mui/material";
+import MenuItemLink from "../shared/components/MenuItemLink";
+
+export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{
@@ -12,30 +11,23 @@ export default function NavBar({openForm}:Props) {
           <Container maxWidth='xl'>
             <Toolbar sx={{display:'flex',justifyContent:'space-between'}}>
               <Box>
-                <MenuItem sx={{display:'flex',gap:2}}>
+                <MenuItemLink  to='/'>
                 <Group fontSize="large" />
-                <Typography variant="h4" fontWeight='bold'>Activities Menu</Typography>
-                </MenuItem>
+                <Typography variant="h4" fontWeight='bold'>Activities Home</Typography>
+                </MenuItemLink>
               </Box>
               <Box sx={{display:'flex'}}>
-                <MenuItem sx={{fontSize:'1.2rem',textTransform:'uppercase',fontWeight:'bold'}}>
+                <MenuItemLink to='/Activities'>
                 Activities
-                </MenuItem>
-                <MenuItem sx={{fontSize:'1.2rem',textTransform:'uppercase',fontWeight:'bold'}}>
-                About
-                </MenuItem>
-                <MenuItem sx={{fontSize:'1.2rem',textTransform:'uppercase',fontWeight:'bold'}}>
-                Contact
-                </MenuItem>
-              </Box>
-              <Button 
-                size="large" 
-                variant="contained" 
-                color="warning"
-                onClick={openForm}
-              >
+                </MenuItemLink>
+                <MenuItemLink  to='/CreateActivity'>
                 Create Activity
-                </Button>
+                </MenuItemLink>
+              </Box>
+              <MenuItem>
+              User Menu
+              </MenuItem>
+
           
         </Toolbar>
 

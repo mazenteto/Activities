@@ -1,8 +1,6 @@
 using Application.Activities.Commands;
 using Application.Activities.DTO;
 using Application.Activities.Queries;
-using Domain;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,6 +42,7 @@ public class ActivitiesController : BaseApiController
     [HttpPost("{Id}/attend")]
     public async Task<ActionResult> Attend(string Id)
     {
+        
         return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = Id }));
     }
 

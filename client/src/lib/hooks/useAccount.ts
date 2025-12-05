@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { LoginSchema } from "../schemas/loginSchema"
+import type { LoginSchema } from "../schemas/loginSchema";
 import agent from "../api/agent"
 import { useLocation, useNavigate } from "react-router";
-import { RegiserSchema } from "../schemas/registerSchema";
+import type { RegiserSchema } from "../schemas/registerSchema";
 import { toast } from "react-toastify";
 
 export const useAccount=()=>{

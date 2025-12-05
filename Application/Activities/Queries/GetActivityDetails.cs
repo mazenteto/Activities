@@ -1,24 +1,30 @@
 using System;
+using Application.Activities.DTO;
 using Application.Core;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Activities.Queries;
 
 public class GetActivityDetails
 {
-    public class Query : IRequest<Result<Activity>>
+    public class Query : IRequest<Result<ActivityDTO>>
     {
         public required string Id { get; set; }
     }
-    public class Handler(AppDBContext context) : IRequestHandler<Query, Result<Activity>>
+    public class Handler(AppDBContext context,IMapper mapper) : IRequestHandler<Query, Result<ActivityDTO>>
     {
-        public async Task<Result<Activity>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<ActivityDTO>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var activity = await context.Activities.FindAsync([request.Id], cancellationToken);
-            if (activity == null) return Result<Activity>.Failure("Activity Not Found",404);
-            return Result<Activity>.Success(activity);
+            var activity = await context.Activities
+                .ProjectTo<ActivityDTO>(mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(x=>x.Id==request.Id, cancellationToken);
+            if (activity == null) return Result<ActivityDTO>.Failure("Activity Not Found",404);
+            return Result<ActivityDTO>.Success(activity);
         }
     }
 

@@ -34,6 +34,14 @@ type User={
   displayName:string,
   imageUrl?:string
 }
+type ChatComment={
+  id:string,
+  createdAt:Date,
+  body:string,
+  userId:string,
+  imageUrl?:string,
+  displayName:string
+}
 
  type LocationIQSuggestion = {
     place_id: string

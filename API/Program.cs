@@ -24,7 +24,9 @@ builder.Services.AddControllers(opt =>
 });
 builder.Services.AddDbContext<AppDBContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaulltConnection"));
+    //opt.UseSqlite(builder.Configuration.GetConnectionString("DefaulltConnection"));
+    
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaulltConnection"));
 });
 builder.Services.AddCors();
 builder.Services.AddSignalR();
@@ -72,10 +74,13 @@ if (app.Environment.IsDevelopment())
 }
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseDefaultFiles();
+app.UseStaticFiles(); 
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();// api/login
 app.MapHub<CommentHub>("/comments");
+app.MapFallbackToController("Index","Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

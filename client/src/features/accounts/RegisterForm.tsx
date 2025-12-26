@@ -5,7 +5,7 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { LockOpen } from "@mui/icons-material";
 import TextInput from "../../app/shared/components/TextInput";
 import { Link } from "react-router";
-import { regiserSchema, RegiserSchema } from "../../lib/schemas/registerSchema";
+import { regiserSchema, type RegiserSchema } from "../../lib/schemas/registerSchema";
 
 
 export default function RegisterForm() {

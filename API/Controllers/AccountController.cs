@@ -37,20 +37,20 @@ public class AccountController(SignInManager<User> signInManager,
     }
     [AllowAnonymous]
     [HttpGet("resendConfirmEmail")]
-    public async Task<ActionResult> ResendConfirmEmail(string? email,string userId)
+    public async Task<ActionResult> ResendConfirmEmail(string? email, string userId)
     {
-        if(string.IsNullOrEmpty(email)&& string.IsNullOrEmpty(userId))
+        if (string.IsNullOrEmpty(email) && string.IsNullOrEmpty(userId))
             return BadRequest("Email or Userid must be provided");
-        
+
         var user = await signInManager.UserManager.Users
-            .FirstOrDefaultAsync(x => x.Email == email||x.Id==userId);
-        if (user == null||string.IsNullOrEmpty(user.Email)) 
+            .FirstOrDefaultAsync(x => x.Email == email || x.Id == userId);
+        if (user == null || string.IsNullOrEmpty(user.Email))
             return BadRequest("Invalid email");
         await SendConfirmationEmailAsync(user, user.Email);
         return Ok();
     }
 
- 
+
 
     private async Task SendConfirmationEmailAsync(User user, string email)
     {
@@ -82,5 +82,22 @@ public class AccountController(SignInManager<User> signInManager,
     {
         await signInManager.SignOutAsync();
         return NoContent();
+    }
+
+    [HttpPost("change-password")]
+    public async Task<ActionResult> ChabgePassword(ChangePasswordDto passwordDto)
+    {
+
+        var user = await signInManager.UserManager.GetUserAsync(User);
+
+        if (user == null) 
+            return Unauthorized();
+            
+        var result = await signInManager.UserManager
+            .ChangePasswordAsync(user, passwordDto.CurrentPassword, passwordDto.NewPassword);
+
+        if (result.Succeeded) return Ok();
+
+        return BadRequest(result.Errors.First().Description);
     }
 }

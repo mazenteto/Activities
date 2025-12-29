@@ -13,6 +13,9 @@ import RequireAuth from "./RequireAuth";
 import RegisterForm from "../../features/accounts/RegisterForm";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import VerifyEmail from "../../features/accounts/VerifyEmail";
+import ChangePasswordForm from "../../features/accounts/ChangePasswordForm";
+import ForgotPasswordForm from "../../features/accounts/ForgotPasswordForm";
+import ResetPasswordForm from "../../features/accounts/ResetPasswordForm";
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +39,9 @@ export const router = createBrowserRouter([
             { path: 'login', element: <LoginForm /> },
             { path: 'register', element: <RegisterForm /> },
             { path: 'confirm-email', element: <VerifyEmail /> },
+            { path: 'change-password', element: <ChangePasswordForm /> },
+            { path: 'forgot-password', element: <ForgotPasswordForm /> },
+            { path: 'reset-password', element: <ResetPasswordForm /> },
             { path: '*', element: <Navigate replace to='/not-found' /> },
 
         ]

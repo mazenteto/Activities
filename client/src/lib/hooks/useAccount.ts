@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import type { LoginSchema } from "../schemas/loginSchema";
-import agent from "../api/agent"
 import {  useNavigate } from "react-router";
 import type { RegiserSchema } from "../schemas/registerSchema";
 import { toast } from "react-toastify";
 import type { ChangePasswordSchema } from "../schemas/changePasswordSchema";
+import agent from "../api/agent";
 
 export const useAccount=()=>{
     const queryClient=useQueryClient();

@@ -104,7 +104,11 @@ export default function LoginForm() {
           >Re-send email link</Button>
         </Box>
       ) : (
-        <Typography sx={{ textAlign: "center" }}>
+        <Box display={'flex'} alignItems={'center'} justifyContent={'center'}gap={3}>
+          <Typography>
+            Forgot password? Click <Link to='/forgot-password'>here</Link> 
+          </Typography>
+          <Typography sx={{ textAlign: "center" }}>
           Don't have an account?
           <Typography
             sx={{ ml: 2 }}
@@ -115,6 +119,7 @@ export default function LoginForm() {
             Sign up
           </Typography>
         </Typography>
+        </Box>
       )}
     </Paper>
   );

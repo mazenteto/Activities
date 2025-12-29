@@ -6,6 +6,7 @@ using Application.Core;
 using Application.Interfaces;
 using Domain;
 using FluentValidation;
+using Infrastructure.Email;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Resend;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -36,6 +38,14 @@ builder.Services.AddMediatR(x =>
     x.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
+builder.Services.AddHttpClient();
+builder.Services.Configure<ResendClientOptions>(opt=>
+{
+   opt.ApiToken=builder.Configuration["Resend:ApiToken"]!; 
+});
+//builder.Services.AddTransient<IResend,ResendClient>();
+builder.Services.AddTransient<IEmailSender<User>,EmailSender>();
+
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddScoped<IPhotoService,PhotoService>();
 builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfiles).Assembly);
@@ -44,6 +54,7 @@ builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
     opt.User.RequireUniqueEmail = true;
+    opt.SignIn.RequireConfirmedEmail=true;
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDBContext>();
